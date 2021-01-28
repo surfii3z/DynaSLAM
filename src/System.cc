@@ -252,7 +252,9 @@ cv::Mat System::TrackRGBD(const cv::Mat &im, const cv::Mat &depthmap, cv::Mat &m
             mbDeactivateLocalizationMode = false;
         }
     }
-
+#ifdef DEBUG
+    std::cout << "System.cc Check mode change done" << std::endl;
+#endif
     // Check reset
     {
     unique_lock<mutex> lock(mMutexReset);
@@ -262,8 +264,15 @@ cv::Mat System::TrackRGBD(const cv::Mat &im, const cv::Mat &depthmap, cv::Mat &m
         mbReset = false;
     }
     }
+#ifdef DEBUG
+    std::cout << "System.cc Check reset done" << std::endl;
+#endif
 
     cv::Mat Tcw = mpTracker->GrabImageRGBD(im,depthmap,mask,timestamp);
+
+#ifdef DEBUG
+    std::cout << "System.cc GrabImageRGBD done" << std::endl;
+#endif
 
     unique_lock<mutex> lock2(mMutexState);
     mTrackingState = mpTracker->mState;

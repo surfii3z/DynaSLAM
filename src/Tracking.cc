@@ -268,6 +268,12 @@ cv::Mat Tracking::GrabImageRGBD(const cv::Mat &imRGB,const cv::Mat &imD, cv::Mat
     cv::Mat imDepth = imD;
     cv::Mat imMask = mask;
 
+#ifdef DEBUG
+    std::cout << "Tracking.cc GrabImageRGBD: mImGray " << mImGray.cols << " " << mImGray.rows << std::endl;
+    std::cout << "Tracking.cc GrabImageRGBD: imDepth " << imDepth.cols << " " << imDepth.rows << std::endl;
+    std::cout << "Tracking.cc GrabImageRGBD: imMask "  << imMask.cols << " " << imMask.rows << std::endl;
+#endif
+
     if(mImGray.channels()==3)
     {
         if(mbRGB)
@@ -283,20 +289,48 @@ cv::Mat Tracking::GrabImageRGBD(const cv::Mat &imRGB,const cv::Mat &imD, cv::Mat
             cvtColor(mImGray,mImGray,CV_BGRA2GRAY);
     }
 
+    // Convert depth to CV_32F
     if((fabs(mDepthMapFactor-1.0f)>1e-5) || imDepth.type()!=CV_32F)
         imDepth.convertTo(imDepth,CV_32F,mDepthMapFactor);
+#ifdef DEBUG
+    std::cout << "Tracking.cc GrabImageRGBD: Done convert depthmap"<< std::endl;
+#endif
 
     mCurrentFrame = Frame(mImGray,imDepth,imMask,timestamp,mpORBextractorLeft,mpORBVocabulary,mK,mDistCoef,mbf,mThDepth);
 
-    LightTrack();
+#ifdef DEBUG
+    std::cout << "Tracking.cc GrabImageRGBD: 1st Frame"<< std::endl;
+#endif
 
-    mGeometry.GeometricModelCorrection(mCurrentFrame,mImGray,imMask);
+    // LightTrack();
 
-    mCurrentFrame = Frame(mImGray,imDepth,imMask,timestamp,mpORBextractorLeft,mpORBVocabulary,mK,mDistCoef,mbf,mThDepth);
+#ifdef DEBUG
+    std::cout << "Tracking.cc GrabImageRGBD: LightTrack"<< std::endl;
+#endif
+
+    // mGeometry.GeometricModelCorrection(mCurrentFrame,mImGray,imMask);
+
+#ifdef DEBUG
+    std::cout << "Tracking.cc GrabImageRGBD: GeometricModelCorrection"<< std::endl;
+#endif
+
+    // mCurrentFrame = Frame(mImGray,imDepth,imMask,timestamp,mpORBextractorLeft,mpORBVocabulary,mK,mDistCoef,mbf,mThDepth);
+
+#ifdef DEBUG
+    std::cout << "Tracking.cc GrabImageRGBD: 2nd Frame"<< std::endl;
+#endif
 
     Track();
 
-    mGeometry.GeometricModelUpdateDB(mCurrentFrame);
+#ifdef DEBUG
+    std::cout << "Tracking.cc GrabImageRGBD: Track after 2nd Frame"<< std::endl;
+#endif
+
+    // mGeometry.GeometricModelUpdateDB(mCurrentFrame);
+
+#ifdef DEBUG
+    std::cout << "Tracking.cc GrabImageRGBD: GeometricModelUpdateDB"<< std::endl;
+#endif
 
     return mCurrentFrame.mTcw.clone();
 }

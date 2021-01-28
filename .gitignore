@@ -12,6 +12,7 @@ Examples/Monocular/mono_carla
 Examples/Stereo/stereo_kitti
 
 Examples/RGB-D/rgbd_tum
+Examples/RGB-D/rgbd_kitti
 
 src/python/coco.pyc
 src/python/config.pyc
@@ -47,4 +48,7 @@ Examples/Monocular/CARLA_KITTI04-12.yaml
 .vscode/
 Vocabulary/ORBvoc.bin
 masks/
+
+eval_RGBD.sh
+results/
 
