@@ -1,8 +1,23 @@
 # Python package depedencies
 ``` bash
 python src/python/Check.py
-
 ```
+Install coco
+``` bash
+git clone https://github.com/waleedka/coco
+cd PythonAPI/
+sudo make install
+```
+
+Install python dependencies
+``` bash
+# With cuda-10.0 cuDNN 7.4
+pip install scikit-image
+pip install tensorflow-gpu==1.14
+pip install keras==2.2.4
+```
+
+See ![guide](https://towardsdatascience.com/installing-multiple-cuda-cudnn-versions-in-ubuntu-fcb6aa5194e2) to install multiple versions of CUDA and cuDNN.
 
 
 # DynaSLAM
