@@ -17,6 +17,8 @@ import scipy.misc
 import skimage.color
 import skimage.io
 
+tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
+
 
 ############################################################
 #  Bounding Boxes

@@ -202,7 +202,7 @@ void LoadImages(const string &strPathToSequence, vector<string> &vstrImageFilena
     }
 
     string strPrefixLeft = strPathToSequence + "/image_0/";
-    string strPrefixDepth = strPathToSequence + "/image_depth/";
+    string strPrefixDepth = strPathToSequence + "/image_depth_100_bilinear_false/";
 
     const int nTimes = vTimestamps.size();
     vstrImageFilenames.resize(nTimes);
